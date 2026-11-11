@@ -1,1 +1,14 @@
+#t.test for two samples
 
+difference = A-B
+t.test(difference , mu=0)
+
+#t.test for two paired samples
+
+##Alternative hypothesis : true mean difference is not equal to 0
+
+t.test(data$A,data$B,paired=True)
+
+##Alternative hypothesis : true mean defference is greater than 0
+
+t.test(data$A,data$B, paired=True, "greater")
