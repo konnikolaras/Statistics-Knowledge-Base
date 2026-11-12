@@ -1,0 +1,22 @@
+install.packages("Hmisc")
+library(Hmisc)
+
+#Εξαιταζουμε την γραμμικη συσχετιση #μεταξυ των μεταβλητων
+
+rcorr(as.matrix(data))
+plot(data)
+install.packages("corrplot")
+library(corrplot)
+correlations = cor(data)
+correlations
+
+#Εμφανιζουμε γραφικα τις συσχετισεις
+
+corrplot(correlations, method="circle")
+corrplot(correlations,method="circle",type="upper")
+
+pairs(data,col = "blue")
+
+library(psych)
+pairs.panels(data,ellipses=FALSE)
+
