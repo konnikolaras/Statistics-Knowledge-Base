@@ -1,1 +1,41 @@
+#Δεδομένα Παραδείγματος
+
+grades.math = c(72,48,61,47,44,34);  n1 = length(grades.math);
+grades.prob = c(70,53,49,60,83);  n2 = length(grades.prob);
+grades.stat = c(78,50,61,87,74);  n3 = length(grades.stat);
+grades = c(grades.math,grades.prob,grades.stat);
+n = c(n1,n2,n3);  k = length(n);  N = sum(n);
+
+#Υπολογισμός SST,SSB,SSW
+SST = sum((grades-mean(grades))^2);
+SSB = n[1]*sum(mean(grades.stat)-mean(grades))+
+      n[2]*sum(mean(grades.prob)-mean(grades))+
+      n[3]*sum(mean(grades.stat)-mean(grades)); SSB;
+SSW = SST-SSB;  SSW;
+SS = c(SST,SSB,SSW); SS;
+Fstat = (SSB/(k-1))/(SSW/(N-k)); Fstat;
+
+# Ποσοστημόρια κατανομών N(0,1), t_n, χ2_n και F_n,k
+qnorm(1-a)    # P(Z>qnorm(1-a))=a,     όπου Z~N(0,1)
+qt(1-a,n)     # P(T>qt(1-a,n))=a,      όπου T~t_n
+qchisq(1-a,n) # P(X>qchisq(1-a,n))=a,  όπου X~χ2_n
+qf(1-a,n,k)   # P(F>qf(1-a,n,k))=a,    όπου F~F_n,k
+
+#Aπόφαση ελέγχου
+a = 0.05; if( Fstat > qf(1-a,k-1,N-k)) { print("H0 is rejected, at level of significance a=0.05") 
+}else {print("We do not have sufficient evidence to reject H0 at the given level of significance a=0.05")}
+
+
+p.value = 1 - pf(Fstat,k-1,N-k); p.value 
+if(p.value < a) { print("H0 is rejected, at level of significance a=0.05") 
+}else {print("We do not have sufficient evidence to reject H0 at the given level of significance a=0.05")}
+
+# Έτοιμη εντολή κατασκευής του πίνακα ANOVA 
+courses = factor( c(rep(1,n1),rep(2,n2),rep(3,n3)) )
+model = lm(grades~courses)
+anova(model)
+
+
+
+
 
